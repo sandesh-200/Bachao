@@ -27,10 +27,10 @@ const ScrollingHeroText = () => {
     return () => clearInterval(scrollInterval)
   }, [])
 
-  const commonTextStyles = "pr-4 text-[40px] font-light tracking-widest text-white/80 leading-none font-sans whitespace-nowrap"
+  const commonTextStyles = "pr-4 text-[40px] font-light tracking-widest text-white/80 leading-none font-[dosis] whitespace-nowrap"
 
   return (
-    <div className="relative overflow-hidden h-[200px] bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-900">
+    <div className="relative overflow-hidden h-[130px] bg-gray-900">
       <div className="absolute inset-0 bg-[url('/noise.png')] opacity-5 mix-blend-overlay"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-500/5 to-transparent"></div>
       

@@ -1,5 +1,4 @@
-import React from 'react';
-import DisasterDashboard from '../components/DisasterDashboard';
+import DisasterDashboard from "@/components/DisasterDashboard"
 import Scroll from '../components/Scroll';
 import Services from './Services';
 

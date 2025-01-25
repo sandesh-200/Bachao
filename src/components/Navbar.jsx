@@ -10,39 +10,29 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { Input } from "../components/ui/input";
+import { Link } from "react-router-dom";
+import logo from '../assets/logoo.png'
 
 const Navbar = () => {
   return (
     <nav className="bg-gray-900 text-white p-4">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo and Brand */}
-        <div className="flex items-center space-x-4">
-          <a href="/" className="flex items-center space-x-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-8 h-8  text-blue-300"
-            >
-              <path d="M15.5 12a3.5 3.5 0 11-7 0 3.5 3.5 0 017 0z" />
-              <path
-                fillRule="evenodd"
-                d="M12 3.5c-3.432 0-6.125 1.534-8.054 3.24C2.02 8.445.814 10.352.33 11.202a2.25 2.25 0 000 1.599c.484.85 1.69 2.758 3.616 4.46C5.875 18.966 8.568 20.5 12 20.5c3.432 0 6.125-1.534 8.054-3.24 1.926-1.704 3.132-3.611 3.616-4.461a2.25 2.25 0 000-1.599c-.484-.85-1.69-2.757-3.616-4.46C18.125 5.034 15.432 3.5 12 3.5zM1.633 11.945c.441-.774 1.551-2.528 3.307-4.08C6.69 6.314 9.045 5 12 5c2.955 0 5.309 1.315 7.06 2.864 1.756 1.553 2.866 3.307 3.307 4.08a.75.75 0 01.001.499c-.441.774-1.551 2.527-3.307 4.08C17.31 17.685 14.955 19 12 19c-2.955 0-5.309-1.315-7.06-2.864-1.756-1.553-2.866-3.306-3.307-4.08a.75.75 0 01.001-.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <span className="text-xl font-bold">DisasterWatch</span>
-          </a>
+        <div className="items-center">
+          <Link to='/' className=" flex -space-x-2.5 items-center">
+            <img src={logo} alt="logo" height='60px' width='60px' className="object-cover pt-2 "/>
+            <span className="text-xl font-bold">Bachaoo</span>
+          </Link>
         </div>
 
         {/* Navigation Links - Hidden on mobile */}
         <div className="hidden md:flex space-x-4">
-          <a href="/dashboard" className="hover:text-gray-300">Dashboard</a>
-          <a href="/alerts" className="hover:text-gray-300">Alerts</a>
-          <a href="/resources" className="hover:text-gray-300">Resources</a>
-          <a href="/reports" className="hover:text-gray-300">Reports</a>
-          <a href="/contact" className="hover:text-gray-300">Contact</a>
-          <a href="/about" className="hover:text-gray-300">About</a>
+          <Link to="/" className="hover:text-gray-300 text-lg">Home</Link>
+          <Link to="/alerts" className="hover:text-gray-300 text-lg ">Alerts</Link>
+          <Link to="/resources" className="hover:text-gray-300 text-lg ">Resources</Link>
+          <Link to="/reports" className="hover:text-gray-300 text-lg ">Reports</Link>
+          <Link to="/contact" className="hover:text-gray-300 text-lg">Contact</Link>
+          <Link to="/about" className="hover:text-gray-300 text-lg ">About</Link>
         </div>
 
         {/* Search Bar - Hidden on mobile */}
