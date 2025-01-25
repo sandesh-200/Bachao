@@ -41,11 +41,18 @@ export const createDisaster = async (req, res) => {
     const savedDisaster = await disaster.save();
     
     // Emit socket event for new disaster
-    const io = getIO();
-    io.emit('newDisaster', savedDisaster);
+    try {
+      const io = getIO();
+      console.log('Emitting new disaster event:', savedDisaster);
+      io.emit('newDisaster', savedDisaster);
+    } catch (socketError) {
+      console.error('Failed to emit socket event:', socketError);
+      // Continue with the response even if socket emission fails
+    }
     
     res.status(201).json(savedDisaster);
   } catch (error) {
+    console.error('Error creating disaster:', error);
     res.status(400).json({ message: error.message });
   }
 };

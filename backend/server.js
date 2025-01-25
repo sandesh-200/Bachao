@@ -24,16 +24,18 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
-// Initialize Socket.io
-initSocket(server);
-
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 
+// Initialize Socket.io (must be after middleware setup)
+const io = initSocket(server);
+console.log('Socket.io initialized');
+
 // Connect to Database
 try {
   await connectDB();
+  console.log('Database connected successfully');
 } catch (error) {
   console.error('Failed to connect to the database:', error.message);
   process.exit(1);
@@ -55,8 +57,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
-// Start Server
+// Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Socket.io ready for connections`);
 });

@@ -11,29 +11,31 @@ import { DisasterProvider } from './components/context/disaster/disasterContext'
 import { ContactProvider } from './components/context/contact/contactContext'
 import ServicesSection from "./Pages/Services";
 import DisasterDetailsModal from "./components/DisasterModal";
+import DisasterAlert from "./components/DisasterAlert";
 
 function App() {
   return (
     <Router>
       <DisasterProvider>
-      <ContactProvider>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/register" element={<RegistrationForm />} />
-              <Route path="/donation" element={<DonationForm />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/services" element={<ServicesSection />} />
-              <Route path="/disaster-modal" element={<DisasterDetailsModal/>} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-        <Toaster richColors position="top-center" />
-      </ContactProvider>
+        <ContactProvider>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <DisasterAlert />
+            <main className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/register" element={<RegistrationForm />} />
+                <Route path="/donation" element={<DonationForm />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/services" element={<ServicesSection />} />
+                <Route path="/disaster-modal" element={<DisasterDetailsModal/>} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+          <Toaster richColors expand={true} position="top-right" closeButton={true} />
+        </ContactProvider>
       </DisasterProvider>
     </Router>
   );
