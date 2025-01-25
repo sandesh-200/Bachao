@@ -604,12 +604,185 @@
 
 // export default DisasterDashboard
 
+// import React, { useEffect, useState } from "react"
+// import { motion, AnimatePresence } from "framer-motion"
+// import { MapPin, Waves, Wind, CloudRain } from "lucide-react"
+// import { useDisasterContext } from "./context/disaster/disasterContext"
+// import { fetchDisasters } from "./context/disaster/disasterActions"
+// import DisasterDetailsModal from "./disasterModal"
+// import logo from '../assets/logoo.png'
+
+// const DisasterDashboard = () => {
+//   const { state, dispatch } = useDisasterContext()
+//   const { disasters, loading, error } = state
+
+//   const [currentIndex, setCurrentIndex] = useState(0)
+//   const [selectedDisaster, setSelectedDisaster] = useState(null)
+//   const [isModalOpen, setIsModalOpen] = useState(false)
+
+//   useEffect(() => {
+//     fetchDisasters(dispatch)
+//   }, [dispatch])
+
+//   useEffect(() => {
+//     if (disasters.length > 0) {
+//       setSelectedDisaster(disasters[currentIndex])
+//     }
+//   }, [currentIndex, disasters])
+
+//   useEffect(() => {
+//     if (disasters.length > 0) {
+//       const interval = setInterval(() => {
+//         setCurrentIndex((prevIndex) => (prevIndex + 1) % disasters.length)
+//       }, 5000)
+
+//       return () => clearInterval(interval)
+//     }
+//   }, [disasters])
+
+//   if (loading) {
+//     return <div>
+//       <img src={logo}
+//       alt="loader" />
+//     </div>
+//   }
+
+//   if (error) {
+//     return <div>Error: {error}</div>
+//   }
+
+//   if (!selectedDisaster) {
+//     return <div>No disasters found.</div>
+//   }
+
+//   const getIcon = (type) => {
+//     switch (type) {
+//       case "Flood":
+//         return <Waves className="w-12 h-12 text-white" />
+//       case "Fire":
+//         return <CloudRain className="w-12 h-12 text-white" />
+//       default:
+//         return <Wind className="w-12 h-12 text-white" />
+//     }
+//   }
+
+//   return (
+//     <div className="w-full h-screen relative overflow-hidden">
+//       {/* Background Map */}
+//       <AnimatePresence mode="wait">
+//         <motion.div
+//           key={selectedDisaster._id}
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           exit={{ opacity: 0 }}
+//           transition={{ duration: 0.5 }}
+//           className="absolute inset-0 w-full h-full"
+//         >
+//           <iframe
+//             title={`Map of ${selectedDisaster.location}`}
+//             width="100%"
+//             height="100%"
+//             frameBorder="0"
+//             scrolling="no"
+//             marginHeight="0"
+//             marginWidth="0"
+//             src={`https://maps.google.com/maps?q=${selectedDisaster.coordinates.latitude},${selectedDisaster.coordinates.longitude}&z=12&output=embed`}
+//             className="absolute inset-0 w-full h-full"
+//           />
+//           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
+//         </motion.div>
+//       </AnimatePresence>
+
+//       {/* Content Overlay */}
+//       <div className="relative z-10 w-full h-full flex items-center justify-start p-8 md:p-16">
+//         <div className="w-[32rem] text-white space-y-6 backdrop-blur-sm bg-black/30 p-8 rounded-lg">
+//           <AnimatePresence mode="wait">
+//             <motion.div
+//               key={selectedDisaster._id}
+//               initial={{ opacity: 0, y: 20 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               exit={{ opacity: 0, y: -20 }}
+//               transition={{ duration: 0.5 }}
+//               className="space-y-4"
+//             >
+//               <div className="flex items-center space-x-4">
+//                 {getIcon(selectedDisaster.type)}
+//                 <h1 className="text-4xl font-bold tracking-tight">{selectedDisaster.location}</h1>
+//               </div>
+
+//               <div className="flex items-center space-x-4">
+//                 <div
+//                   className={`
+//                   px-4 py-2 
+//                   ${selectedDisaster.severity === "Critical" ? "bg-red-500/80" : "bg-yellow-500/80"}
+//                   rounded-full font-semibold
+//                 `}
+//                 >
+//                   {selectedDisaster.severity.toUpperCase()}
+//                 </div>
+//                 <div className="flex items-center space-x-2">
+//                   <MapPin className="w-5 h-5" />
+//                   <span>{`${selectedDisaster.coordinates.latitude}, ${selectedDisaster.coordinates.longitude}`}</span>
+//                 </div>
+//               </div>
+
+//               <p className="text-xl leading-relaxed">{selectedDisaster.description}</p>
+
+//               <button
+//                 onClick={() => setIsModalOpen(true)}
+//                 className="
+//                 bg-white/20 backdrop-blur-md 
+//                 border border-white/30 
+//                 text-white 
+//                 px-6 py-3 
+//                 rounded-full 
+//                 hover:bg-white/30 
+//                 transition-all
+//               "
+//               >
+//                 View Details
+//               </button>
+//             </motion.div>
+//           </AnimatePresence>
+//         </div>
+//       </div>
+
+//       {/* Navigation Dots */}
+//       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+//         {disasters.map((_, index) => (
+//           <button
+//             key={index}
+//             onClick={() => setCurrentIndex(index)}
+//             className={`
+//               w-3 h-3 rounded-full transition-all duration-300
+//               ${currentIndex === index ? "bg-white w-6" : "bg-white/50"}
+//             `}
+//           />
+//         ))}
+//       </div>
+
+//       {/* Disaster Details Modal */}
+//       <AnimatePresence>
+//         {isModalOpen && (
+//           <DisasterDetailsModal 
+//             disaster={selectedDisaster} 
+//             isOpen={isModalOpen} 
+//             onClose={() => setIsModalOpen(false)} 
+//           />
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   )
+// }
+
+// export default DisasterDashboard
+
 import React, { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MapPin, Waves, Wind, CloudRain } from "lucide-react"
 import { useDisasterContext } from "./context/disaster/disasterContext"
 import { fetchDisasters } from "./context/disaster/disasterActions"
-import DisasterDetailsModal from "./disasterModal"
+import DisasterDetailsModal from "./DisasterModal"
 import logo from '../assets/logoo.png'
 
 const DisasterDashboard = () => {
@@ -617,18 +790,11 @@ const DisasterDashboard = () => {
   const { disasters, loading, error } = state
 
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [selectedDisaster, setSelectedDisaster] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalDisaster, setModalDisaster] = useState(null)
 
   useEffect(() => {
     fetchDisasters(dispatch)
   }, [dispatch])
-
-  useEffect(() => {
-    if (disasters.length > 0) {
-      setSelectedDisaster(disasters[currentIndex])
-    }
-  }, [currentIndex, disasters])
 
   useEffect(() => {
     if (disasters.length > 0) {
@@ -642,8 +808,7 @@ const DisasterDashboard = () => {
 
   if (loading) {
     return <div>
-      <img src={logo}
-      alt="loader" />
+      <img src={logo} alt="loader" />
     </div>
   }
 
@@ -651,7 +816,7 @@ const DisasterDashboard = () => {
     return <div>Error: {error}</div>
   }
 
-  if (!selectedDisaster) {
+  if (disasters.length === 0) {
     return <div>No disasters found.</div>
   }
 
@@ -671,7 +836,7 @@ const DisasterDashboard = () => {
       {/* Background Map */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={selectedDisaster._id}
+          key={disasters[currentIndex]._id}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -679,14 +844,14 @@ const DisasterDashboard = () => {
           className="absolute inset-0 w-full h-full"
         >
           <iframe
-            title={`Map of ${selectedDisaster.location}`}
+            title={`Map of ${disasters[currentIndex].location}`}
             width="100%"
             height="100%"
             frameBorder="0"
             scrolling="no"
             marginHeight="0"
             marginWidth="0"
-            src={`https://maps.google.com/maps?q=${selectedDisaster.coordinates.latitude},${selectedDisaster.coordinates.longitude}&z=12&output=embed`}
+            src={`https://maps.google.com/maps?q=${disasters[currentIndex].coordinates.latitude},${disasters[currentIndex].coordinates.longitude}&z=12&output=embed`}
             className="absolute inset-0 w-full h-full"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
@@ -698,7 +863,7 @@ const DisasterDashboard = () => {
         <div className="w-[32rem] text-white space-y-6 backdrop-blur-sm bg-black/30 p-8 rounded-lg">
           <AnimatePresence mode="wait">
             <motion.div
-              key={selectedDisaster._id}
+              key={disasters[currentIndex]._id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -706,39 +871,27 @@ const DisasterDashboard = () => {
               className="space-y-4"
             >
               <div className="flex items-center space-x-4">
-                {getIcon(selectedDisaster.type)}
-                <h1 className="text-4xl font-bold tracking-tight">{selectedDisaster.location}</h1>
+                {getIcon(disasters[currentIndex].type)}
+                <h1 className="text-4xl font-bold tracking-tight">{disasters[currentIndex].location}</h1>
               </div>
 
               <div className="flex items-center space-x-4">
                 <div
-                  className={`
-                  px-4 py-2 
-                  ${selectedDisaster.severity === "Critical" ? "bg-red-500/80" : "bg-yellow-500/80"}
-                  rounded-full font-semibold
-                `}
+                  className={`px-4 py-2 ${disasters[currentIndex].severity === "Critical" ? "bg-red-500/80" : "bg-yellow-500/80"} rounded-full font-semibold`}
                 >
-                  {selectedDisaster.severity.toUpperCase()}
+                  {disasters[currentIndex].severity.toUpperCase()}
                 </div>
                 <div className="flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
-                  <span>{`${selectedDisaster.coordinates.latitude}, ${selectedDisaster.coordinates.longitude}`}</span>
+                  <span>{`${disasters[currentIndex].coordinates.latitude}, ${disasters[currentIndex].coordinates.longitude}`}</span>
                 </div>
               </div>
 
-              <p className="text-xl leading-relaxed">{selectedDisaster.description}</p>
+              <p className="text-xl leading-relaxed">{disasters[currentIndex].description}</p>
 
               <button
-                onClick={() => setIsModalOpen(true)}
-                className="
-                bg-white/20 backdrop-blur-md 
-                border border-white/30 
-                text-white 
-                px-6 py-3 
-                rounded-full 
-                hover:bg-white/30 
-                transition-all
-              "
+                onClick={() => setModalDisaster(disasters[currentIndex])}
+                className="bg-white/20 backdrop-blur-md border border-white/30 text-white px-6 py-3 rounded-full hover:bg-white/30 transition-all"
               >
                 View Details
               </button>
@@ -753,21 +906,18 @@ const DisasterDashboard = () => {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`
-              w-3 h-3 rounded-full transition-all duration-300
-              ${currentIndex === index ? "bg-white w-6" : "bg-white/50"}
-            `}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${currentIndex === index ? "bg-white w-6" : "bg-white/50"}`}
           />
         ))}
       </div>
 
       {/* Disaster Details Modal */}
       <AnimatePresence>
-        {isModalOpen && (
-          <DisasterDetailsModal 
-            disaster={selectedDisaster} 
-            isOpen={isModalOpen} 
-            onClose={() => setIsModalOpen(false)} 
+        {modalDisaster && (
+          <DisasterDetailsModal
+            disaster={modalDisaster}
+            isOpen={!!modalDisaster}
+            onClose={() => setModalDisaster(null)}
           />
         )}
       </AnimatePresence>

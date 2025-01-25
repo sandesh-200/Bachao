@@ -210,24 +210,7 @@ const ServicesSection = () => {
                   {service.description}
                 </p>
               </div>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="
-                  w-full 
-                  bg-white 
-                  text-gray-900 
-                  font-semibold 
-                  py-3 
-                  rounded-full 
-                  hover:bg-gray-100 
-                  transition-colors 
-                  duration-300
-                  cursor-pointer
-                "
-              >
-                Explore Service
-              </motion.button>
+            
             </motion.div>
           ))}
         </div>

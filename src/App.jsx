@@ -9,9 +9,8 @@ import DonationForm from "./components/DonationForm";
 import Contact from "./Pages/Contact";
 import { DisasterProvider } from './components/context/disaster/disasterContext'
 import { ContactProvider } from './components/context/contact/contactContext'
-import RegistrationForm from "./Pages/Register";
 import ServicesSection from "./Pages/Services";
-import { Toaster } from "sonner";
+import DisasterDetailsModal from "./components/DisasterModal";
 
 function App() {
   return (
@@ -28,6 +27,7 @@ function App() {
               <Route path="/donation" element={<DonationForm />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<ServicesSection />} />
+              <Route path="/disaster-modal" element={<DisasterDetailsModal/>} />
             </Routes>
           </main>
           <Footer />
