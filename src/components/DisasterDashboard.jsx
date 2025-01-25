@@ -610,6 +610,7 @@ import { MapPin, Waves, Wind, CloudRain } from "lucide-react"
 import { useDisasterContext } from "./context/disaster/disasterContext"
 import { fetchDisasters } from "./context/disaster/disasterActions"
 import DisasterDetailsModal from "./disasterModal"
+import logo from '../assets/logoo.png'
 
 const DisasterDashboard = () => {
   const { state, dispatch } = useDisasterContext()
@@ -640,7 +641,10 @@ const DisasterDashboard = () => {
   }, [disasters])
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>
+      <img src={logo}
+      alt="loader" />
+    </div>
   }
 
   if (error) {

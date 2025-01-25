@@ -9,7 +9,6 @@ import DonationForm from "./components/DonationForm";
 import Contact from "./Pages/Contact";
 import { DisasterProvider } from './components/context/disaster/disasterContext'
 import { ContactProvider } from './components/context/contact/contactContext'
-import { ContactProvider } from "./components/context/contact/contactContext";
 import RegistrationForm from "./Pages/Register";
 import ServicesSection from "./Pages/Services";
 import { Toaster } from "sonner";
@@ -18,7 +17,6 @@ function App() {
   return (
     <Router>
       <DisasterProvider>
-
       <ContactProvider>
         <div className="flex flex-col min-h-screen">
           <Navbar />

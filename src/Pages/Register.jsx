@@ -89,7 +89,7 @@ const RegistrationForm = () => {
             </div>
             <Button
               onClick={handleSendOTP}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 rounded-lg py-3 text-lg font-semibold"
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white transition-all duration-300 rounded-lg py-3 text-lg font-semibold"
             >
               Send OTP
             </Button>
@@ -157,11 +157,12 @@ const RegistrationForm = () => {
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-8">
       <div className="w-full max-w-lg bg-gray-900 shadow-2xl rounded-2xl overflow-hidden">
-        <div className="bg-blue-600 p-8 text-white">
-          <h2 className="text-3xl font-bold flex items-center">
-            <UserCircle className="mr-4 h-8 w-8" />
+        <div className="bg-gray-900 pt-8 px-4 text-white">
+          <h2 className="text-3xl font-bold flex items-center justify-center">
+            <UserCircle className="mr-4 h-8 w-8 text-blue-300" />
             User Registration
           </h2>
+           
         </div>
         <form className="p-8 space-y-6">{renderContent()}</form>
       </div>

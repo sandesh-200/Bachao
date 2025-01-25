@@ -13,10 +13,12 @@ import { Input } from "../components/ui/input";
 import { Link } from "react-router-dom";
 import logo from '../assets/logoo.png'
 import '@fontsource/quicksand'
+import NotificationPopover from "./Notification";
 
 const Navbar = () => {
+
   return (
-    <nav className="bg-gray-900 text-white p-4 font-quicksand ">
+    <nav className="bg-gray-900 text-white p-4 font-quicksand h-15 flex">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo and Brand */}
         <div className="items-center">
@@ -51,28 +53,21 @@ const Navbar = () => {
 
         {/* Notifications and User Profile */}
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="icon">
+          {/* <Button variant="ghost" size="icon">
             <Bell className="h-5 w-5" />
             <span className="sr-only">Notifications</span>
-          </Button>
+          </Button> */}
+          <NotificationPopover/>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-                <span className="sr-only">User menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56" align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Help</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+         <Link to='/register'>
+         
+          <Button 
+          variant='outline' 
+          className='cursor-pointer'
+          >
+            Register
+          </Button>
+            </Link>
 
           {/* Mobile Menu Button */}
           <Button variant="ghost" size="icon" className="lg:hidden">
