@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+    <footer className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
       <div className="container mx-auto px-4 py-12 grid md:grid-cols-4 gap-8">
         {/* Logo and Description */}
         <div>

@@ -8,8 +8,9 @@ import logo from '../assets/logoo.png'
 
 const Navbar = () => {
   return (
-    <div className="h-20 flex items-center justify-between p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-sm">
+    <div className="h-20 flex sticky top-0 items-center justify-between p-4 w-full z-50 bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-sm">
       {/* Logo */}
+      <Link to='/'>
       <div className=''>
     <img 
   src={logo} 
@@ -17,6 +18,8 @@ const Navbar = () => {
   className='w-25'
 />
       </div>
+  </Link>
+      
 
       {/* Desktop Navigation */}
       <div className="flex gap-4 items-center">

@@ -156,7 +156,7 @@ const DonationForm = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-8">
       <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden">
-        <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
           <h2 className="text-2xl font-bold flex items-center">
             <CreditCard className="mr-3" />
             Disaster Relief Donation
@@ -251,7 +251,7 @@ const DonationForm = () => {
           </div>
           <Button 
             type="submit" 
-            className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all duration-300"
+            className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-indigo-700 transition-all duration-300"
           >
             Donate Now
           </Button>
