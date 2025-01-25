@@ -1,12 +1,33 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { io } from 'socket.io-client';
+import NotificationPopover from './Notification';
 
 const SOCKET_URL = 'http://localhost:5000';
 
 const DisasterAlert = () => {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [notifications, setNotifications] = useState(() => {
+    const saved = localStorage.getItem('notifications');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const addNotification = (disaster) => {
+    const message = `A ${disaster.type} disaster has been reported in ${disaster.location} with ${disaster.severity} severity.`;
+    const newNotification = {
+      id: Date.now(),
+      message,
+      time: new Date().toLocaleString(),
+      read: false,
+      type: 'disaster',
+      severity: disaster.severity,
+      location: disaster.location,
+      disasterType: disaster.type
+    };
+    setNotifications(prev => [newNotification, ...prev]);
+    return newNotification;
+  };
 
   useEffect(() => {
     console.log('DisasterAlert: Initializing socket connection...');
@@ -44,8 +65,13 @@ const DisasterAlert = () => {
 
     newSocket.on('newDisaster', (disaster) => {
       console.log('DisasterAlert: New disaster received:', disaster);
+      
+      // Add to notifications
+      const notification = addNotification(disaster);
+      
+      // Show toast
       toast.warning('New Disaster Alert!', {
-        description: `A ${disaster.type} disaster has been reported in ${disaster.location} with ${disaster.severity} severity.`,
+        description: notification.message,
         duration: 10000,
         closeButton: true,
       });
@@ -53,21 +79,27 @@ const DisasterAlert = () => {
 
     setSocket(newSocket);
 
-    // Cleanup function
     return () => {
       console.log('DisasterAlert: Cleaning up socket connection...');
       if (newSocket) {
         newSocket.disconnect();
       }
     };
-  }, []); // Empty dependency array = run once on mount
+  }, []);
 
-  // You can use this for debugging
+  // Save notifications to localStorage whenever they change
   useEffect(() => {
-    console.log('DisasterAlert: Connection status:', isConnected);
-  }, [isConnected]);
+    localStorage.setItem('notifications', JSON.stringify(notifications));
+  }, [notifications]);
 
-  return null;
+  return (
+    <div className="inline-block">
+      <NotificationPopover 
+        notifications={notifications} 
+        setNotifications={setNotifications}
+      />
+    </div>
+  );
 };
 
 export default DisasterAlert;

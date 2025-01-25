@@ -13,7 +13,7 @@ import { Input } from "../components/ui/input";
 import { Link } from "react-router-dom";
 import logo from '../assets/logoo.png'
 import '@fontsource/quicksand'
-import NotificationPopover from "./Notification";
+import DisasterAlert from "./DisasterAlert";
 
 const Navbar = () => {
 
@@ -57,10 +57,10 @@ const Navbar = () => {
             <Bell className="h-5 w-5" />
             <span className="sr-only">Notifications</span>
           </Button> */}
-          <NotificationPopover/>
-
-         <Link to='/register'>
-         
+          <div className="mr-2">
+            <DisasterAlert />
+          </div>
+          <Link to='/register'>
           <Button 
           variant='outline' 
           className='cursor-pointer'

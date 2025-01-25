@@ -12,7 +12,6 @@ import { ContactProvider } from './components/context/contact/contactContext'
 import ServicesSection from "./Pages/Services";
 import DisasterDetailsModal from "./components/disasterModal";
 import DisasterDetailsModal from "./components/DisasterModal";
-import DisasterAlert from "./components/DisasterAlert";
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
         <ContactProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />
-            <DisasterAlert />
             <main className="flex-grow">
               <Routes>
                 <Route path="/" element={<Home />} />
