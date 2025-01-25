@@ -3,12 +3,26 @@ import cors from 'cors';
 import connectDB from './config/db.js';
 import disasterRoutes from './routes/disasters.js';
 import resourceRoutes from './routes/resources.js';
+import contactRoutes from './routes/contacts.js';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS Configuration
+const corsOptions = {
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Add your frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Connect to Database
@@ -22,6 +36,7 @@ try {
 // Routes
 app.use('/api/disasters', disasterRoutes);
 app.use('/api/resources', resourceRoutes);
+app.use('/api/contacts', contactRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
