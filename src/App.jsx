@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Toaster } from "sonner";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
+import RegistrationForm from './Pages/Register';
+import Footer from './components/Footer';
 import DonationForm from "./components/DonationForm";
 import Contact from "./Pages/Contact";
 import { DisasterProvider } from './components/context/disaster/disasterContext'
