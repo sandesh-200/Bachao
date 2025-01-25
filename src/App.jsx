@@ -10,6 +10,7 @@ import Contact from "./Pages/Contact";
 import { DisasterProvider } from './components/context/disaster/disasterContext'
 import { ContactProvider } from './components/context/contact/contactContext'
 import ServicesSection from "./Pages/Services";
+import DisasterDetailsModal from "./components/disasterModal";
 import DisasterDetailsModal from "./components/DisasterModal";
 import DisasterAlert from "./components/DisasterAlert";
 

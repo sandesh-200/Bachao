@@ -782,7 +782,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { MapPin, Waves, Wind, CloudRain } from "lucide-react"
 import { useDisasterContext } from "./context/disaster/disasterContext"
 import { fetchDisasters } from "./context/disaster/disasterActions"
-import DisasterDetailsModal from "./DisasterModal"
+import DisasterDetailsModal from "./disasterModal"
 import logo from '../assets/logoo.png'
 
 const DisasterDashboard = () => {
