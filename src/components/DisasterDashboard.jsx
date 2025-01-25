@@ -2,34 +2,35 @@
 
 import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MapPin, Waves, Wind, CloudRain } from "lucide-react"
+import { MapPin, Waves, Wind, CloudRain,Activity,Cloud,Sun } from "lucide-react"
 
 const dummyLocations = [
   {
-    name: "Mumbai City Center",
-    status: "critical",
-    description: "Severe flooding across multiple districts. Immediate evacuation needed.",
-    coordinates: [19.076, 72.8777],
-    backgroundImage: "https://source.unsplash.com/random/1600x900?city,flood",
-    icon: <Waves className="w-12 h-12 text-white" />,
+    name: "Kathmandu Valley",
+    status: "alert",
+    description: "Moderate earthquake tremors felt. Risk of aftershocks.",
+    coordinates: [27.7172, 85.324],
+    backgroundImage: "https://source.unsplash.com/random/1600x900?mountains,earthquake",
+    icon: <Activity className="w-12 h-12 text-white" />,
   },
   {
-    name: "Chennai Coastal Area",
-    status: "warning",
-    description: "High tide warning. Potential storm surge expected.",
-    coordinates: [13.0827, 80.2707],
-    backgroundImage: "https://source.unsplash.com/random/1600x900?ocean,storm",
-    icon: <CloudRain className="w-12 h-12 text-white" />,
+    name: "Pokhara Lakeside",
+    status: "normal",
+    description: "Heavy rainfall but no major disruptions reported.",
+    coordinates: [28.2096, 83.9856],
+    backgroundImage: "https://source.unsplash.com/random/1600x900?lake,rain",
+    icon: <Cloud className="w-12 h-12 text-white" />,
   },
   {
-    name: "Delhi NCR Region",
-    status: "warning",
-    description: "Air quality deteriorating. Possible environmental hazard.",
-    coordinates: [28.6139, 77.209],
-    backgroundImage: "https://source.unsplash.com/random/1600x900?city,pollution",
-    icon: <Wind className="w-12 h-12 text-white" />,
+    name: "Lumbini Heritage Site",
+    status: "normal",
+    description: "Weather conditions stable. Tourist activity unaffected.",
+    coordinates: [27.6792, 83.507],
+    backgroundImage: "https://source.unsplash.com/random/1600x900?heritage,temple",
+    icon: <Sun className="w-12 h-12 text-white" />,
   },
-]
+];
+
 
 const DisasterDashboard = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -92,13 +93,19 @@ const DisasterDashboard = () => {
               </div>
 
               <div className="flex items-center space-x-4">
-                <div
-                  className={`
-                  px-4 py-2 
-                  ${selectedLocation.status === "critical" ? "bg-red-500/80" : "bg-yellow-500/80"}
-                  rounded-full font-semibold
-                `}
-                >
+              <div
+  className={`
+    px-4 py-2 
+    ${
+      selectedLocation.status === "critical"
+        ? "bg-red-500/80"
+        : selectedLocation.status === "alert"
+        ? "bg-yellow-500/80"
+        : "bg-green-500/80"
+    }
+    rounded-full font-semibold
+  `}
+>
                   {selectedLocation.status.toUpperCase()}
                 </div>
                 <div className="flex items-center space-x-2">
