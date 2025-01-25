@@ -12,10 +12,11 @@ import {
 import { Input } from "../components/ui/input";
 import { Link } from "react-router-dom";
 import logo from '../assets/logoo.png'
+import '@fontsource/quicksand'
 
 const Navbar = () => {
   return (
-    <nav className="bg-gray-900 text-white p-4">
+    <nav className="bg-gray-900 text-white p-4 font-quicksand ">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo and Brand */}
         <div className="items-center">
@@ -26,7 +27,7 @@ const Navbar = () => {
         </div>
 
         {/* Navigation Links - Hidden on mobile */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden lg:flex space-x-4">
           <Link to="/" className="hover:text-gray-300 text-lg">Home</Link>
           <Link to="/alerts" className="hover:text-gray-300 text-lg ">Alerts</Link>
           <Link to="/resources" className="hover:text-gray-300 text-lg ">Resources</Link>
@@ -74,7 +75,7 @@ const Navbar = () => {
           </DropdownMenu>
 
           {/* Mobile Menu Button */}
-          <Button variant="ghost" size="icon" className="md:hidden">
+          <Button variant="ghost" size="icon" className="lg:hidden">
             <Menu className="h-5 w-5" />
             <span className="sr-only">Menu</span>
           </Button>
