@@ -1,4 +1,5 @@
 import Disaster from '../models/disaster.js';
+import { getIO } from '../socket.js';
 
 // Get all disasters
 export const getAllDisasters = async (req, res) => {
@@ -35,15 +36,15 @@ export const getDisasterById = async (req, res) => {
 
 // Create new disaster
 export const createDisaster = async (req, res) => {
-  const disaster = new Disaster({
-    ...req.body,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  });
-
   try {
-    const newDisaster = await disaster.save();
-    res.status(201).json(newDisaster);
+    const disaster = new Disaster(req.body);
+    const savedDisaster = await disaster.save();
+    
+    // Emit socket event for new disaster
+    const io = getIO();
+    io.emit('newDisaster', savedDisaster);
+    
+    res.status(201).json(savedDisaster);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

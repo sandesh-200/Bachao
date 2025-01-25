@@ -5,12 +5,15 @@ import disasterRoutes from './routes/disasters.js';
 import contactRoutes from './routes/contacts.js';
 import fundingRoutes from './routes/fundingRoutes.js';
 import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import http from 'http';
+import { initSocket } from './socket.js';
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const server = http.createServer(app);
 
 // CORS Configuration
 const corsOptions = {
@@ -20,6 +23,9 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200
 };
+
+// Initialize Socket.io
+initSocket(server);
 
 // Middleware
 app.use(cors(corsOptions));
@@ -50,6 +56,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
