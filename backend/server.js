@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './config/db.js';
 import disasterRoutes from './routes/disasters.js';
-import resourceRoutes from './routes/resources.js';
 import contactRoutes from './routes/contacts.js';
+import fundingRoutes from './routes/fundingRoutes.js';
 import dotenv from 'dotenv';
 
 // Load environment variables
@@ -35,8 +35,8 @@ try {
 
 // Routes
 app.use('/api/disasters', disasterRoutes);
-app.use('/api/resources', resourceRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/fundings', fundingRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
