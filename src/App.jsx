@@ -5,6 +5,7 @@ import About from "./Pages/About";
 import RegistrationForm from './Pages/Register';
 import Footer from './components/Footer';
 import DonationForm from "./components/DonationForm";
+import Services from './Pages/Services';
 import Contact from "./Pages/Contact";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/donation" element={<DonationForm />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <Services/>
       <Footer/>
     </Router>
     </>
