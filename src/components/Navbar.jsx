@@ -4,30 +4,33 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
 import NotificationBell from './Alert';
 import { Link } from 'react-router-dom'
+import logo from '../assets/logoo.png'
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between p-4 bg-white shadow-sm">
+    <div className="h-20 flex items-center justify-between p-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-sm">
       {/* Logo */}
-      <div>
-        <img 
-          src="vite.svg" 
-          alt="logo" 
-          className="h-8 w-8"
-        />
+      <div className=''>
+    <img 
+  src={logo} 
+  alt="logo" 
+  className='w-25'
+/>
       </div>
 
       {/* Desktop Navigation */}
+      <div className="flex gap-4 items-center">
+
       <div className="hidden md:block">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/" className="px-3 py-2">
+              <NavigationMenuLink href="/" className="px-3 py-2 ">
                 Home
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink href="/about" className="px-3 py-2">
+              <NavigationMenuLink href="/about" className="px-3 py-2 ">
                 About
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -58,8 +61,9 @@ const Navbar = () => {
         <Button className="cursor-pointer">Register</Button>
         </Link>
       </div>
+      </div>
       <NotificationBell/>
-    </nav>
+    </div>
   );
 };
 

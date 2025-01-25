@@ -8,6 +8,7 @@ import {
   Mail, 
   Phone 
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -28,10 +29,10 @@ const Footer = () => {
         <div>
           <h4 className="font-semibold mb-4">Quick Links</h4>
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-blue-200">Home</a></li>
-            <li><a href="#" className="hover:text-blue-200">Donation</a></li>
-            <li><a href="#" className="hover:text-blue-200">Emergency Response</a></li>
-            <li><a href="#" className="hover:text-blue-200">About Us</a></li>
+            <li><Link to="/" className="hover:text-blue-200">Home</Link></li>
+            <li><Link to="/donation" className="hover:text-blue-200">Donation</Link></li>
+            {/* <li><Link to="" className="hover:text-blue-200">Emergency Response</Link></li> */}
+            <li><Link to="/about" className="hover:text-blue-200">About Us</Link></li>
           </ul>
         </div>
 
@@ -41,7 +42,7 @@ const Footer = () => {
           <ul className="space-y-2 text-sm">
             <li className="flex items-center">
               <MapPin className="mr-2 w-4 h-4" />
-              Mumbai, India
+              Biratnagar, Nepal
             </li>
             <li className="flex items-center">
               <Phone className="mr-2 w-4 h-4" />

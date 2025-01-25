@@ -4,6 +4,7 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import RegistrationForm from './Pages/Register';
 import Footer from './components/Footer';
+import DonationForm from "./components/DonationForm";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/donation" element={<DonationForm />} />
       </Routes>
       <Footer/>
     </Router>
