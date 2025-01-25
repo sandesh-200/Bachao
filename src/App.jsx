@@ -7,29 +7,22 @@ import RegistrationForm from './Pages/Register';
 import Footer from './components/Footer';
 import DonationForm from "./components/DonationForm";
 import Contact from "./Pages/Contact";
-import Services from "./Pages/Services";
-import { ContactProvider } from "./components/context/contact/contactContext.jsx";
+import { DisasterProvider } from './components/context/disaster/disasterContext'
 
 function App() {
   return (
     <Router>
-      <ContactProvider>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/register" element={<RegistrationForm />} />
-              <Route path="/donation" element={<DonationForm />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/services" element={<Services />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-        <Toaster richColors position="top-center" />
-      </ContactProvider>
+      <DisasterProvider>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/donation" element={<DonationForm />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+      <Footer/>
+      </DisasterProvider>
     </Router>
   );
 }
