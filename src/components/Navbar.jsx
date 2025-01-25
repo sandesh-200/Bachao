@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink } from '@/components/ui/navigation-menu';
 import NotificationBell from './Alert';
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -53,7 +54,9 @@ const Navbar = () => {
 
       {/* Register Button */}
       <div className="hidden md:block">
-        <Button>Register</Button>
+        <Link to="/register">
+        <Button className="cursor-pointer">Register</Button>
+        </Link>
       </div>
       <NotificationBell/>
     </nav>
