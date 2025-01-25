@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import connectDB from './config/db.js';
+import disasterRoutes from './routes/disasters.js';
+import resourceRoutes from './routes/resources.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -17,9 +19,19 @@ try {
   process.exit(1);
 }
 
+// Routes
+app.use('/api/disasters', disasterRoutes);
+app.use('/api/resources', resourceRoutes);
+
 // Basic Route
 app.get('/', (req, res) => {
   res.send('Disaster Management Backend is Running');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
 });
 
 // Start Server
