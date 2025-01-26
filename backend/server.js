@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import disasterRoutes from './routes/disasters.js';
 import contactRoutes from './routes/contacts.js';
 import fundingRoutes from './routes/fundingRoutes.js';
+import authRoutes from './routes/auth.js';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import http from 'http';
@@ -16,16 +17,15 @@ const app = express();
 const server = http.createServer(app);
 
 // CORS Configuration
-const corsOptions = {
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Add your frontend URL
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
   optionsSuccessStatus: 200
-};
+}));
 
 // Middleware
-app.use(cors(corsOptions));
 app.use(express.json());
 
 // Initialize Socket.io (must be after middleware setup)
@@ -45,6 +45,7 @@ try {
 app.use('/api/disasters', disasterRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/api/fundings', fundingRoutes);
+app.use('/api/auth', authRoutes);
 
 // Basic Route
 app.get('/', (req, res) => {
@@ -56,6 +57,9 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong!' });
 });
+
+// Handle preflight requests
+app.options('*', cors());
 
 // Start server
 const PORT = process.env.PORT || 5000;

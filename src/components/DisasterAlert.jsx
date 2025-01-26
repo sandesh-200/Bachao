@@ -33,59 +33,54 @@ const DisasterAlert = () => {
     console.log('DisasterAlert: Initializing socket connection...');
     
     const newSocket = io(SOCKET_URL, {
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000,
-      reconnectionAttempts: 5
+      reconnectionAttempts: Infinity,
+      timeout: 20000,
+      autoConnect: true
     });
 
     newSocket.on('connect', () => {
       console.log('DisasterAlert: Socket connected successfully');
       setIsConnected(true);
-      toast.success('Connected to disaster alert system', {
-        duration: 3000
-      });
-    });
-
-    newSocket.on('disconnect', () => {
-      console.log('DisasterAlert: Socket disconnected');
-      setIsConnected(false);
-      toast.error('Disconnected from disaster alert system', {
-        duration: 3000
-      });
+      toast.success('Connected to disaster alert system');
     });
 
     newSocket.on('connect_error', (error) => {
       console.error('DisasterAlert: Connection error:', error);
       setIsConnected(false);
-      toast.error(`Connection error: ${error.message}`, {
-        duration: 3000
-      });
+      toast.error('Failed to connect to alert system. Retrying...');
     });
 
-    newSocket.on('newDisaster', (disaster) => {
-      console.log('DisasterAlert: New disaster received:', disaster);
-      
-      // Add to notifications
-      const notification = addNotification(disaster);
-      
-      // Show toast
-      toast.warning('New Disaster Alert!', {
-        description: notification.message,
+    newSocket.on('disconnect', (reason) => {
+      console.log('DisasterAlert: Socket disconnected:', reason);
+      setIsConnected(false);
+      if (reason === 'io server disconnect') {
+        // the disconnection was initiated by the server, reconnect manually
+        newSocket.connect();
+      }
+      toast.warning('Disconnected from alert system');
+    });
+
+    newSocket.on('disaster', (data) => {
+      console.log('DisasterAlert: Received disaster notification:', data);
+      const notification = addNotification(data);
+      toast.error(notification.message, {
         duration: 10000,
-        closeButton: true,
       });
     });
 
     setSocket(newSocket);
 
+    // Cleanup on unmount
     return () => {
-      console.log('DisasterAlert: Cleaning up socket connection...');
       if (newSocket) {
-        newSocket.disconnect();
+        console.log('DisasterAlert: Cleaning up socket connection');
+        newSocket.close();
       }
     };
-  }, []);
+  }, []); // Empty dependency array - only run once on mount
 
   // Save notifications to localStorage whenever they change
   useEffect(() => {
@@ -93,10 +88,11 @@ const DisasterAlert = () => {
   }, [notifications]);
 
   return (
-    <div className="inline-block">
+    <div>
       <NotificationPopover 
         notifications={notifications} 
         setNotifications={setNotifications}
+        isConnected={isConnected}
       />
     </div>
   );

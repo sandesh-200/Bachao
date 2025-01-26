@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Toaster } from "sonner";
 import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
@@ -11,31 +10,36 @@ import { DisasterProvider } from './components/context/disaster/disasterContext'
 import { ContactProvider } from './components/context/contact/contactContext'
 import ServicesSection from "./Pages/Services";
 import DisasterDetailsModal from "./components/disasterModal";
+import Resources from "./Pages/Resources";
+import Reports from "./Pages/Reports";
 
 function App() {
   return (
-    <Router>
-      <DisasterProvider>
-        <ContactProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/register" element={<RegistrationForm />} />
-                <Route path="/donation" element={<DonationForm />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/services" element={<ServicesSection />} />
-                <Route path="/disaster-modal" element={<DisasterDetailsModal/>} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-          <Toaster richColors expand={true} position="top-right" closeButton={true} />
-        </ContactProvider>
-      </DisasterProvider>
-    </Router>
+    <>
+      <Router>
+        <DisasterProvider>
+          <ContactProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/register" element={<RegistrationForm />} />
+                  <Route path="/donation" element={<DonationForm />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/services" element={<ServicesSection />} />
+                  <Route path="/disaster-modal" element={<DisasterDetailsModal/>} />
+                  <Route path="/resources" element={<Resources />} />
+                  <Route path="/reports" element={<Reports />} />
+                </Routes>
+              </main>
+              <Footer />
+            </div>
+          </ContactProvider>
+        </DisasterProvider>
+      </Router>
+    </>
   );
 }
 

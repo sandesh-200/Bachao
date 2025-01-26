@@ -3,12 +3,16 @@ import { Input } from "../components/ui/input"
 import { Button } from "../components/ui/button"
 import { Label } from "../components/ui/label"
 import { UserCircle, Smartphone, Mail, ShieldCheck } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import toast, { Toaster } from 'react-hot-toast'
 
 const RegistrationForm = () => {
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [stage, setStage] = useState("registration")
   const [formData, setFormData] = useState({
     name: "",
-    number: "",
+    phone: "",
     email: "",
     otp: "",
   })
@@ -21,21 +25,77 @@ const RegistrationForm = () => {
     }))
   }
 
-  const handleSendOTP = (e) => {
+  const handleSendOTP = async (e) => {
     e.preventDefault()
-    if (formData.number) {
-      console.log("OTP sent to", formData.number)
-      setStage("verify-otp")
+    if (!formData.name || !formData.phone) {
+      toast.error('Please fill in all required fields')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+        }),
+      })
+
+      const data = await response.json()
+      
+      if (response.ok) {
+        toast.success('OTP sent successfully')
+        setStage("verify-otp")
+      } else {
+        throw new Error(data.message || 'Failed to send OTP')
+      }
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
-  const handleVerifyOTP = (e) => {
+  const handleVerifyOTP = async (e) => {
     e.preventDefault()
-    if (formData.otp === "123456") {
-      console.log("User Registered:", formData)
-      setStage("success")
-    } else {
-      alert("Invalid OTP")
+    if (!formData.otp) {
+      toast.error('Please enter the OTP')
+      return
+    }
+
+    setLoading(true)
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/verify-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone: formData.phone,
+          otp: formData.otp,
+        }),
+      })
+
+      const data = await response.json()
+      
+      if (response.ok) {
+        toast.success('Registration successful!')
+        setStage("success")
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
+      } else {
+        throw new Error(data.message || 'Failed to verify OTP')
+      }
+    } catch (error) {
+      toast.error(error.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -65,10 +125,10 @@ const RegistrationForm = () => {
               </Label>
               <Input
                 type="tel"
-                name="number"
-                value={formData.number}
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
-                placeholder="Enter your phone number"
+                placeholder="+977 98XXXXXXXX"
                 className="bg-gray-800 border-gray-700 text-white focus:ring-2 focus:ring-blue-500 rounded-lg"
                 required
               />
@@ -89,9 +149,10 @@ const RegistrationForm = () => {
             </div>
             <Button
               onClick={handleSendOTP}
+              disabled={loading}
               className="w-full bg-blue-500 hover:bg-blue-700 text-white transition-all duration-300 rounded-lg py-3 text-lg font-semibold"
             >
-              Send OTP
+              {loading ? "Sending OTP..." : "Send OTP"}
             </Button>
           </>
         )
@@ -99,14 +160,16 @@ const RegistrationForm = () => {
       case "verify-otp":
         return (
           <>
-            <div className="text-center mb-4">
-              <h3 className="text-xl font-bold text-white">Verify OTP</h3>
-              <p className="text-sm text-gray-400">Enter the 6-digit code sent to {formData.number}</p>
+            <div className="text-center mb-6">
+              <ShieldCheck className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+              <h2 className="text-xl font-semibold text-white mb-2">Verify Your Phone</h2>
+              <p className="text-gray-400">
+                We've sent a verification code to {formData.phone}
+              </p>
             </div>
             <div>
               <Label className="flex items-center mb-2 text-gray-300">
-                <ShieldCheck className="mr-2 text-blue-300" />
-                OTP
+                Enter OTP
               </Label>
               <Input
                 type="text"
@@ -114,38 +177,29 @@ const RegistrationForm = () => {
                 value={formData.otp}
                 onChange={handleChange}
                 placeholder="Enter 6-digit OTP"
-                maxLength="6"
-                className="bg-gray-800 border-gray-700 text-white focus:ring-2 focus:ring-blue-500 rounded-lg text-center tracking-[0.5em]"
+                className="bg-gray-800 border-gray-700 text-white focus:ring-2 focus:ring-blue-500 rounded-lg text-center text-xl tracking-wider"
+                maxLength={6}
                 required
               />
             </div>
             <Button
               onClick={handleVerifyOTP}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all duration-300 rounded-lg py-3 text-lg font-semibold"
+              disabled={loading}
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white transition-all duration-300 rounded-lg py-3 text-lg font-semibold"
             >
-              Verify OTP
+              {loading ? "Verifying..." : "Verify OTP"}
             </Button>
-            <div className="text-center mt-2">
-              <button
-                type="button"
-                onClick={() => setStage("registration")}
-                className="text-sm text-blue-300 hover:underline"
-              >
-                Resend OTP
-              </button>
-            </div>
           </>
         )
 
       case "success":
         return (
           <div className="text-center">
-            <ShieldCheck className="mx-auto mb-4 w-16 h-16 text-green-500" />
-            <h3 className="text-2xl font-bold mb-2 text-white">Registration Successful!</h3>
-            <p className="text-gray-400">You can now access your account</p>
-            <Button className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white rounded-lg py-3 text-lg font-semibold">
-              Continue to Dashboard
-            </Button>
+            <ShieldCheck className="w-20 h-20 text-green-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-semibold text-white mb-2">Registration Successful!</h2>
+            <p className="text-gray-400">
+              Redirecting you to login...
+            </p>
           </div>
         )
 
@@ -155,20 +209,21 @@ const RegistrationForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-8">
-      <div className="w-full max-w-lg bg-gray-900 shadow-2xl rounded-2xl overflow-hidden">
-        <div className="bg-gray-900 pt-8 px-4 text-white">
-          <h2 className="text-3xl font-bold flex items-center justify-center">
-            <UserCircle className="mr-4 h-8 w-8 text-blue-300" />
-            User Registration
-          </h2>
-           
-        </div>
-        <form className="p-8 space-y-6">{renderContent()}</form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-4">
+      <Toaster position="top-right" />
+      <div className="max-w-md w-full space-y-6 bg-gray-800 p-8 rounded-xl shadow-lg">
+        {stage === "registration" && (
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-white">Create Account</h2>
+            <p className="text-gray-400">Join Bachao to help and get help</p>
+          </div>
+        )}
+        <form className="space-y-6">
+          {renderContent()}
+        </form>
       </div>
     </div>
   )
 }
 
 export default RegistrationForm
-
