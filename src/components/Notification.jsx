@@ -8,7 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Bell, AlertTriangle } from 'lucide-react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const NotificationPopover = ({ notifications: externalNotifications, setNotifications: setExternalNotifications }) => {
+const NotificationPopover = ({ 
+  notifications: externalNotifications = [], 
+  setNotifications: setExternalNotifications = () => {} 
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [internalNotifications, setInternalNotifications] = useState(() => {
     const saved = localStorage.getItem('notifications');
@@ -161,11 +164,6 @@ const NotificationPopover = ({ notifications: externalNotifications, setNotifica
       </PopoverContent>
     </Popover>
   );
-};
-
-NotificationPopover.defaultProps = {
-  notifications: [],
-  setNotifications: () => {}
 };
 
 export default NotificationPopover;
